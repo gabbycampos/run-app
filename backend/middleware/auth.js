@@ -1,57 +1,49 @@
-"use strict";
-
-// Middleware to handle common auth cases in routes
+/** Middleware for handling req authorization for routes. */
 
 const jwt = require("jsonwebtoken");
 const { SECRET_KEY } = require("../config");
-const { UnauthorizedError } = require("../expressError");
 
-/** Middleware: Authenticate user.
- *
- * If a token was provided, verify it, and, if valid, store the token payload
- * on res.locals (this will include the username and isAdmin field.)
- *
- * It's not an error if no token was provided or if the token is not valid.
- */
+/** Middleware: Authenticate user. */
 
 function authenticateJWT(req, res, next) {
-    try {
-        const authHeader = req.headers && req.headers.authorization;
-        if (authHeader) {
-            const token = authHeader.replace(/^[Bb]earer /, "").trim();
-            res.locals.user = jwt.verify(token, SECRET_KEY);
-        }
-        return next();
-    } catch (err) {
-        return next();
-    }
+  try {
+    const tokenFromBody = req.body._token;
+    const payload = jwt.verify(tokenFromBody, SECRET_KEY);
+    req.user = payload; // create a current user
+    return next();
+  } catch (err) {
+    return next();
+  }
 }
 
-// Middleware to use when they must be logged in.
+/** Middleware: Requires user is authenticated. */
+
 function ensureLoggedIn(req, res, next) {
-    try {
-        if (!res.locals.user) throw new UnauthorizedError();
-        return next();
-    } catch (err) {
-        return next(err);
-    }
+  if (!req.user) {
+    return next({ status: 401, message: "Unauthorized" });
+  } else {
+    return next();
+  }
 }
 
-// Middleware to require correct username
+/** Middleware: Requires correct username. */
+
 function ensureCorrectUser(req, res, next) {
-    try {
-        if (req.user.username === req.params.username) {
-            return next();
-        } else {
-            return next({ status: 401, message: "Unathorized" });
-        }
-    } catch (err) {
-        return next({ status: 401, message: "Unathorized" });
+  try {
+    if (req.user.username === req.params.username) {
+      return next();
+    } else {
+      return next({ status: 401, message: "Unauthorized" });
     }
+  } catch (err) {
+    // errors would happen here if we made a request and req.user is undefined
+    return next({ status: 401, message: "Unauthorized" });
+  }
 }
+// end
 
 module.exports = {
-    authenticateJWT,
-    ensureLoggedIn,
-    ensureCorrectUser,
+  authenticateJWT,
+  ensureLoggedIn,
+  ensureCorrectUser,
 };

@@ -8,7 +8,17 @@ const express = require("express");
 const { ensureCorrectUser, ensureLoggedIn } = require("../middleware/auth");
 const { BadRequestError } = require("../expressError");
 const User = require("../models/user");
+
 const router = new express.Router();
+
+router.get("/", async function (req, res, next) {
+    try {
+      const users = await User.findAll();
+      return res.json({ users });
+    } catch (error) {
+      return next(err);
+    }
+  });
 
 // GET /[username] => {user}
 // Returns { username, firstName, lastName, underArmourID? }
