@@ -7,11 +7,12 @@ import Alert from "../common/Alert";
  * Shows form and manages update to state on changes.
  * On submission:
  * - calls signup function prop
- * - redirects to /companies route
+ * - redirects to /timer route
  *
  * Routes -> SignupForm -> Alert
  * Routed as /signup
  */
+
 
 function SignupForm({ signup }) {
   const history = useHistory();

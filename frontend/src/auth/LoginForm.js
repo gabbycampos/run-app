@@ -7,7 +7,7 @@ import Alert from "../common/Alert";
  * Shows form and manages update to state on changes.
  * On submission:
  * - calls login function prop
- * - redirects to /companies route
+ * - redirects to /timer route
  *
  * Routes -> LoginForm -> Alert
  * Routed as /login
@@ -37,7 +37,7 @@ function LoginForm({ login }) {
     evt.preventDefault();
     let result = await login(formData);
     if (result.success) {
-      history.push("/");
+      history.push("/timer");
       console.log('update navbar')
     } else {
       setFormErrors(result.errors);

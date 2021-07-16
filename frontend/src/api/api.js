@@ -5,8 +5,6 @@ const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
 /** API Class.
  *
  * Static class tying together methods used to get/send to to the API.
- * There shouldn't be any frontend-specific stuff here, and there shouldn't
- * be any API-aware stuff elsewhere in the frontend.
  *
  */
 
@@ -20,8 +18,8 @@ class RunAppApi {
     const url = `${BASE_URL}/${endpoint}`;
     const headers = { Authorization: `Bearer ${RunAppApi.token}` };
     const params = (method === "get")
-        ? data
-        : {};
+      ? data
+      : {};
 
     try {
       return (await axios({ url, method, data, params, headers })).data;
@@ -33,13 +31,6 @@ class RunAppApi {
   }
 
   // Individual API routes
-
-  /** Get the current user. */
-
-  static async getCurrentUser(username) {
-    let res = await this.request(`users/${username}`);
-    return res.user;
-  }
 
   /** Get token for login from username, password. */
 
@@ -54,7 +45,14 @@ class RunAppApi {
     let res = await this.request(`auth/register`, data, "post");
     return res.token;
   }
-  
+
+  /** Get current user information. */
+
+  static async getUser(username) {
+    let res = await this.request(`users/${username}`);
+    return res;
+  }
+
 }
 
 
