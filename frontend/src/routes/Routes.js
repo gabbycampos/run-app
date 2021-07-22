@@ -5,7 +5,7 @@ import LoginForm from "../auth/LoginForm";
 import SignUpForm from "../auth/SignUpForm";
 //import PrivateRoute from "./PrivateRoute";
 import TimerList from '../timers/TimerList';
-import UserList from '../users/UserList';
+import UserRunList from '../users/UserRunList';
 
 
 function Routes({ login, signup }) {
@@ -36,7 +36,7 @@ function Routes({ login, signup }) {
           </Route>
 
           <Route exact path="/profile">
-            <UserList />
+            <UserRunList />
           </Route>
 
           <Redirect to="/" />

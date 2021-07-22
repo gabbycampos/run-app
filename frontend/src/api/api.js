@@ -53,6 +53,11 @@ class RunAppApi {
     return res;
   }
 
+  static async getRun(userId) {
+    let res = await this.request(`runs/${userId}`);
+    return res;
+  }
+
 }
 
 
