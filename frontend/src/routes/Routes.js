@@ -4,7 +4,7 @@ import HomePage from "../HomePage";
 import LoginForm from "../auth/LoginForm";
 import SignUpForm from "../auth/SignUpForm";
 //import PrivateRoute from "./PrivateRoute";
-import TimerList from '../timers/TimerList';
+import Timer from '../timers/Timer';
 import UserRunList from '../users/UserRunList';
 
 
@@ -32,7 +32,7 @@ function Routes({ login, signup }) {
           </Route>
 
           <Route exact path="/timer">
-            <TimerList />
+            <Timer />
           </Route>
 
           <Route exact path="/profile">

@@ -8,7 +8,7 @@ const { BCRYPT_WORK_FACTOR } = require("../config.js");
 // Related functions for runs
 
 class Run {
-    static async create({ id, userId, distance, avgPace, duration, map }) {
+    static async create({ id, userId, day, distance, pace, duration, coordinates, place, mapUrl }) {
         const duplicateCheck = await db.query(
             `SELECT id
             FROM runs
@@ -19,10 +19,10 @@ class Run {
 
     const result = await db.query(
         `INSERT INTO runs
-        (id, user_id, distance, average_pace, duration, map)
-        VALUES ($1, $2, $3, $4, $5, $6)
-        RETURNING id, user_id AS "userId", distance, average_pace AS "avgPace", duration, map`,
-    [id, userId, distance, avgPace, duration, map]);
+        (id, user_id, day, distance, pace, duration, place, map_url)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+        RETURNING id, user_id AS "userId", day, distance, pace, duration, coordinates, place, map_url AS "mapUrl"`,
+    [id, userId, day, distance, pace, duration, coordinates, place, mapUrl]);
 
     const run = result.rows[0];
 
@@ -34,7 +34,13 @@ class Run {
         const runRes = await db.query(
             `SELECT id,
                 user_id AS "userId",
-                distance, average_pace AS "avgPace", duration, map
+                day, 
+                distance, 
+                pace, 
+                duration,
+                coordinates
+                place,
+                map_url AS "mapUrl"
             FROM runs
             WHERE user_id = $1`, [userId]
         );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 function UseGeoLocation() {
     const [lat, setLat] = useState(null);
@@ -19,6 +19,17 @@ function UseGeoLocation() {
             });
         }
     }
+ 
+
+
+    const getWatchLocation = () => {
+        navigator.geolocation.watchPosition(
+            data => {
+                console.log(data);
+                console.log(data.coords.latitude)
+            }, error => console.log(error)
+        )
+    }   
 
     return (
         <div>
@@ -27,6 +38,7 @@ function UseGeoLocation() {
             <p>{status}</p>
             {lat && <p>Latitude: {lat}</p>}
             {lng && <p>Longitude: {lng}</p>}
+            <button onClick={getWatchLocation}>watch location func.</button>
         </div>
     )
 }
