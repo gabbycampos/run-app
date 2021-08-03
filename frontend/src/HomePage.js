@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import UserContext from './auth/UserContext';
-import './Homepage.css';
+import './HomePage.css';
 
 // Shows welcome message or login/register buttons
 // Routed at / 
