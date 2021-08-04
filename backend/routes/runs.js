@@ -37,4 +37,13 @@ router.delete("/:id", ensureLoggedIn, async function(req, res,next) {
     }
 });
 
+router.post("/:id", async function(req, res, next) {
+    try {
+        const run = await Run.create(req.body);
+        return res.status(201).json({ run })
+    } catch(err) {
+        return next(err)
+    }
+});
+
 module.exports = router;

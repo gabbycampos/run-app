@@ -53,8 +53,14 @@ class RunAppApi {
     return res;
   }
 
-  static async getRun(userId) {
+  static async getRuns(userId) {
     let res = await this.request(`runs/${userId}`);
+    return res;
+  }
+
+  static async saveRun(userId, id, data) {
+    let res = await this.request(`runs/${userId}/${id}`, data, "post");
+    //return res.run
     return res;
   }
 
