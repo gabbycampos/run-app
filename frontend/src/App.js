@@ -36,9 +36,9 @@ function App() {
           let { username } = jwt.decode(token);
           // put the token on the Api class so it can use it to call the API.
           RunAppApi.token = token;
-          let currentUser = await RunAppApi.getUser(username);
+          let currentUser = await RunAppApi.getCurrentUser(username);
           setCurrentUser(currentUser);
-          console.log(currentUser);
+          //console.log(currentUser);
         } catch (err) {
           console.error("App loadUserInfo: problem loading", err);
           setCurrentUser(null);

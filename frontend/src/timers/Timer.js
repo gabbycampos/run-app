@@ -2,7 +2,7 @@ import React from 'react';
 import TimerSetUp from './TimerSetUp';
 import './Timer.css';
 import haversine from 'haversine-distance';
-import RunAppApi from '../api/api';
+//import RunAppApi from '../api/api';
 
 class Timer extends React.Component {
     constructor() {

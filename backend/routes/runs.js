@@ -9,12 +9,12 @@ const Run = require("../models/run");
 
 const router = new express.Router();
 
-router.get("/", async function (req, res, next) {
+router.get("/:userId", async function (req, res, next) {
     try {
-      const runs = await Run.findAll();
+      const runs = await Run.findAll(req.params.userId);
       return res.json({ runs });
     } catch (error) {
-      return next(err);
+      return next(error);
     }
   });
 
@@ -28,21 +28,21 @@ router.get("/:id", async function(req, res, next) {
     }
 });
 
-router.delete("/:id", ensureLoggedIn, async function(req, res,next) {
-    try {
-        await run.remove(req.params.id);
-        return res.json({ deleted: req.params.id });
-    } catch(err) {
-        return next(err);
-    }
-});
-
 router.post("/:id", async function(req, res, next) {
     try {
         const run = await Run.create(req.body);
         return res.status(201).json({ run })
     } catch(err) {
         return next(err)
+    }
+});
+
+router.delete("/:id", async function(req, res,next) {
+    try {
+        await Run.remove(req.params.id);
+        return res.json({ deleted: req.params.id });
+    } catch(err) {
+        return next(err);
     }
 });
 

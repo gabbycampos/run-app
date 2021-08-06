@@ -25,7 +25,7 @@ class RunAppApi {
       return (await axios({ url, method, data, params, headers })).data;
     } catch (err) {
       console.error("API Error:", err.response);
-      let message = err.response.data.error.message;
+      let message = err.response.data.err.message;
       throw Array.isArray(message) ? message : [message];
     }
   }
@@ -48,16 +48,23 @@ class RunAppApi {
 
   /** Get current user information. */
 
-  static async getUser(username) {
+  static async getCurrentUser(username) {
     let res = await this.request(`users/${username}`);
     return res;
   }
 
+  // get one run
+  static async getRun(id) {
+    let res = await this.request(`runs/${id}`);
+    return res;
+  }
+  // get users runs
   static async getRuns(userId) {
     let res = await this.request(`runs/${userId}`);
     return res;
   }
 
+  // save a run
   static async saveRun(userId, id, data) {
     let res = await this.request(`runs/${userId}/${id}`, data, "post");
     //return res.run

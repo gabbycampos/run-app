@@ -3,9 +3,10 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import HomePage from "../HomePage";
 import LoginForm from "../auth/LoginForm";
 import SignUpForm from "../auth/SignUpForm";
-//import PrivateRoute from "./PrivateRoute";
+import PrivateRoute from "./PrivateRoute";
 import Timer from '../timers/Timer';
 import UserRunList from '../users/UserRunList';
+import UserRun from "../users/UserRun";
 
 
 function Routes({ login, signup }) {
@@ -31,13 +32,17 @@ function Routes({ login, signup }) {
             <SignUpForm signup={signup} />
           </Route>
 
-          <Route exact path="/timer">
+          <PrivateRoute exact path="/timer">
             <Timer />
-          </Route>
+          </PrivateRoute>
 
-          <Route exact path="/profile">
+          <PrivateRoute exact path="/runs/:userId">
             <UserRunList />
-          </Route>
+          </PrivateRoute>
+
+          <PrivateRoute exact path="/runs/:id">
+            <UserRun />
+          </PrivateRoute>
 
           <Redirect to="/" />
         </Switch>

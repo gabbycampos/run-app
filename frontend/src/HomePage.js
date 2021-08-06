@@ -17,7 +17,7 @@ function HomePage() {
                 <p className="lead">Run along with your custom running timer.</p>
                 {currentUser
                     ? <h2>
-                        Welcome Back, {currentUser.firstName || currentUser.username}!
+                        Welcome Back, {currentUser.users.firstName || currentUser.users.username}!
                     </h2>
                     : (
                         <p>

@@ -8,7 +8,7 @@ const { BCRYPT_WORK_FACTOR } = require("../config.js");
 // Related functions for runs
 
 class Run {
-    static async create({ day, distance, pace, duration, coordinates, place, mapUrl }) {
+    static async create({id, userId, day, distance, pace, duration, coordinates, place, mapUrl }) {
         const duplicateCheck = await db.query(
             `SELECT id
             FROM runs
@@ -19,8 +19,8 @@ class Run {
 
         const result = await db.query(
             `INSERT INTO runs
-        (day, distance, pace, duration, place, map_url)
-        VALUES ($1, $2, $3, $4, $5, $6, $7)
+        (id, user_id, day, distance, pace, duration, coordinates, place, map_url)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
         RETURNING id, user_id AS "userId", day, distance, pace, duration, coordinates, place, map_url AS "mapUrl"`,
             [id, userId, day, distance, pace, duration, coordinates, place, mapUrl]);
 
@@ -29,8 +29,8 @@ class Run {
         return run;
     }
 
-    // get a users runs
-    static async get(userId) {
+    // get a users run
+    static async get(id) {
         const runRes = await db.query(
             `SELECT id,
                 user_id AS "userId",
@@ -42,34 +42,44 @@ class Run {
                 place,
                 map_url AS "mapUrl"
             FROM runs
-            WHERE user_id = $1`, [userId]
+            WHERE id = $1`, [id]
         );
-        if (!runRes) throw new BadRequestError('Unable to find runs');
+        if (!runRes) throw new BadRequestError('Unable to find run');
 
         const run = runRes.rows[0]
 
         return run;
     }
 
-    // //get one run by id
-    // static async get(id) {
-    //     const oneRun = await db.query(
-    //         `SELECT id,
-    //             user_id AS "userId",
-    //             day, 
-    //             distance, 
-    //             pace, 
-    //             duration,
-    //             coordinates
-    //             place,
-    //             map_url AS "mapUrl"
-    //         FROM runs
-    //         WHERE id = $1`, [id]
-    //     );
-    //     const run = oneRun.rows[0];
-    //     if (!run) throw new NotFoundError(`Unable to find run with id: ${id}`);
-    //     return run;
-    // }
+    // get a users runs
+    static async findAll(userId) {
+        const runs = await db.query(
+            `SELECT id,
+                user_id AS "userId",
+                day,
+                distance, 
+                pace,
+                duration,
+                coordinates,
+                place,
+                map_url AS "mapUrl"
+            FROM runs
+            WHERE user_id = $1
+            ORDER BY day`, [userId]);
+        return runs.rows;
+    }
+
+    // remove a users run
+    static async remove(id) {
+        const result = await db.query(
+            `DELETE
+            FROM runs
+            WHERE id = $1
+            RETURNING id`, [id]);
+        const run = result.rows[0];
+
+        if (!run) throw new NotFoundError(`No run: ${id}`);
+    }
 
 }
 

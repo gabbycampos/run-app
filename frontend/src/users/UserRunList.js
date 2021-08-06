@@ -15,6 +15,7 @@ function UserRunList() {
     }, []);
 
     async function getRunList(userId) {
+        // debugger;
         let runs = await RunAppApi.getRuns(userId);
         setRuns(runs);
     }
