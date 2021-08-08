@@ -44,15 +44,16 @@ class Run {
             FROM runs
             WHERE id = $1`, [id]
         );
-        if (!runRes) throw new BadRequestError('Unable to find run');
 
         const run = runRes.rows[0]
+
+        if (!runRes) throw new BadRequestError('Unable to find run');
 
         return run;
     }
 
     // get a users runs
-    static async findAll(userId) {
+    static async findAll() {
         const runs = await db.query(
             `SELECT id,
                 user_id AS "userId",
@@ -64,8 +65,7 @@ class Run {
                 place,
                 map_url AS "mapUrl"
             FROM runs
-            WHERE user_id = $1
-            ORDER BY day`, [userId]);
+            ORDER BY day`);
         return runs.rows;
     }
 

@@ -2,7 +2,7 @@ import React from 'react';
 import TimerSetUp from './TimerSetUp';
 import './Timer.css';
 import haversine from 'haversine-distance';
-//import RunAppApi from '../api/api';
+import RunAppApi from '../api/api';
 
 class Timer extends React.Component {
     constructor() {
@@ -92,50 +92,11 @@ class Timer extends React.Component {
             }, 1000);
         }
     }
-    // // stop and reset timer
-    // async handleStop() {
-    //     const { coordinates, timeStart } = this.state;
-    //     //console.log('lat ', this.state.currentGeolocation.latitude)
-    //     let first = { lat: coordinates[0].latitude, lng: coordinates[0].longitude, time: new Date().getTime() }
-    //     let last = { lat: coordinates[coordinates.length - 1].latitude, lng: coordinates[coordinates.length - 1].longitude }
-    //     let timeEnd = new Date()
-    //     let diff = (timeEnd.getTime() - timeStart.getTime())
-    //     let minutes = Math.floor(diff / 60000);
-    //     let seconds = ((diff % 60000) / 1000).toFixed(0);
-    //     let time = (minutes * 60) + seconds
-    //     let speed = `${time / this.state.distance}`
-    //     try {
-    //         let run = await RunAppApi.saveRun(this.state.distance,
-    //             this.setState({
-    //                 ...this.state,
-    //                 walkTimer: 1,
-    //                 runTimer: 2,
-    //                 cycleNumber: 3,
-    //                 timerCount: 2 * 60,
-    //                 cycleType: 'RUN',
-    //                 runActive: false,
-    //                 distance: haversine(first, last) * 0.000621371192.toFixed(2),
-    //                 duration: `${minutes}:${seconds}`,
-    //                 pace: speed
-    //             }));
-    //         return run;
-    //     } catch (errors) {
-    //         console.log(errors)
-    //     }
-    //     console.log(first, last);
-    //     console.log(timeStart)
-    //     console.log(timeEnd)
-    //     console.log('timeEnd ', timeEnd.getTime())
-    //     console.log('timeStart ', timeStart.getTime())
-    //     console.log('sub ', timeEnd.getTime() - timeStart.getTime())
-    //     console.log(`${minutes}:${seconds}`)
-    //     //return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
-
-    //     clearInterval(this.loop);
-    // }
 
 // stop and reset timer
-handleStop = () => {
+handleStop = async (event) => {
+    event.preventDefault();
+
     const { coordinates, timeStart } = this.state;
     //console.log('lat ', this.state.currentGeolocation.latitude)
     let first = {lat: coordinates[0].latitude, lng: coordinates[0].longitude, time: new Date().getTime() }
@@ -147,18 +108,10 @@ handleStop = () => {
     let seconds = ((diff % 60000) / 1000).toFixed(0);
     let time = (minutes * 60) + seconds
     let speed = `${time/this.state.distance}`
-
-    console.log(first, last);
-    console.log(timeStart)
-    console.log(timeEnd)
-    //console.log('timeEnd -start', timeEnd.getTime() - timeStart.getTime())
-    console.log('timeEnd ', timeEnd.getTime())
-    console.log('timeStart ', timeStart.getTime())
-    console.log('sub ', timeEnd.getTime() - timeStart.getTime())
-    console.log(`${minutes}:${seconds}`)
+    
     //return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
 
-    this.setState({
+    let data = this.setState({
         ...this.state,
         walkTimer: 1,
         runTimer: 2,
@@ -168,9 +121,13 @@ handleStop = () => {
         runActive: false,
         distance: haversine(first, last) * 0.000621371192.toFixed(2),
         duration: `${minutes}:${seconds}`,
-        pace: speed
+        pace: speed,
+        coordinates: coordinates
     });
     clearInterval(this.loop);
+
+    let res = await RunAppApi.saveRun(data);
+    console.log(res)
 }
 
 // handle time conversion

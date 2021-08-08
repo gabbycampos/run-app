@@ -9,9 +9,9 @@ const Run = require("../models/run");
 
 const router = new express.Router();
 
-router.get("/:userId", async function (req, res, next) {
+router.get("/", async function (req, res, next) {
     try {
-      const runs = await Run.findAll(req.params.userId);
+      const runs = await Run.findAll();
       return res.json({ runs });
     } catch (error) {
       return next(error);

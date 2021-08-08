@@ -59,15 +59,20 @@ class RunAppApi {
     return res;
   }
   // get users runs
-  static async getRuns(userId) {
-    let res = await this.request(`runs/${userId}`);
+  static async getRuns() {
+    let res = await this.request(`runs/`);
+    return res;
+  }
+
+  // delete run
+  static async deleteRun(id) {
+    let res = await this.request(`runs/${id}`, "delete");
     return res;
   }
 
   // save a run
-  static async saveRun(userId, id, data) {
-    let res = await this.request(`runs/${userId}/${id}`, data, "post");
-    //return res.run
+  static async saveRun(data) {
+    let res = await this.request(`timer/}`, data, "post");
     return res;
   }
 

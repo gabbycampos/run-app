@@ -91,6 +91,14 @@ function App() {
       return { success: false, errors };
     }
   }
+  async function saveRun(data) {
+    try {
+      await RunAppApi.saveRun(data);
+      return { success: true};
+    } catch (err) {
+      return { success: false };
+    }
+  }
 
   if (!infoLoaded) return <LoadingSpinner />;
 
@@ -100,7 +108,7 @@ function App() {
             value={{ currentUser, setCurrentUser }}>
           <div className="App">
             <Navigation logout={logout} />
-            <Routes login={login} signup={signup} />
+            <Routes login={login} signup={signup} saveRun={saveRun}/>
           </div>
         </UserContext.Provider>
       </BrowserRouter>
