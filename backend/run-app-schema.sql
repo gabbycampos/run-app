@@ -6,15 +6,13 @@ CREATE TABLE users (
 );
 
 CREATE TABLE runs (
-    id integer PRIMARY KEY,
-    user_id text NOT NULL REFERENCES users,
+    id SERIAL PRIMARY KEY,
+    user_id TEXT REFERENCES users,
     day TIMESTAMP NOT NULL,
-    distance NUMERIC NOT NULL,
-    pace NUMERIC NOT NULL,
-    duration NUMERIC NOT NULL,
-    coordinates TEXT[] NOT NULL,
-    place TEXT,
-    map_url TEXT
+    distance TEXT NOT NULL,
+    pace TEXT NOT NULL,
+    duration TEXT NOT NULL,
+    coordinates TEXT[] NOT NULL
 );
 
 -- seed sample data --
@@ -24,13 +22,10 @@ VALUES ('testuser',
         'Test',
         'User');
 
-INSERT INTO runs(id, user_id, day, distance, pace, duration, coordinates, place, map_url)
-VALUES (1, 
-        'testuser', 
+INSERT INTO runs (user_id, day, distance, pace, duration, coordinates)
+VALUES ('testuser',
         '20210801',
-        1.53, 
-        13.05, 
-        20.01, 
-        '{"data", "data", "data"}',
-        'Riverside, CA',
-        'map here')
+        '1.53', 
+        '13.05', 
+        '20.01', 
+        '{"data", "data", "data"}');

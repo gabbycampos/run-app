@@ -72,7 +72,7 @@ class RunAppApi {
 
   // save a run
   static async saveRun(data) {
-    let res = await this.request(`timer/}`, data, "post");
+    let res = await this.request(`runs`, data, "post");
     return res;
   }
 

@@ -28,10 +28,10 @@ router.get("/:id", async function(req, res, next) {
     }
 });
 
-router.post("/:id", async function(req, res, next) {
+router.post("/", async function(req, res, next) {
     try {
         const run = await Run.create(req.body);
-        return res.status(201).json({ run })
+        return res.json({ run })
     } catch(err) {
         return next(err)
     }

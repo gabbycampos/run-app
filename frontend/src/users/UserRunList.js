@@ -38,8 +38,7 @@ function UserRunList() {
     console.log('currentUser.users log ', currentUser.users.username)
  
     async function deleteRunForUser(id) {
-        let runs = await RunAppApi.deleteRun(id);
-        setRuns(runs.filter(r => r.id !== id));
+        await RunAppApi.deleteRun(id);
     }
     
     // const runComponent = runs.runs.map(r => (
@@ -64,9 +63,9 @@ function UserRunList() {
             {/* {console.log(`comp `, runComponent)} */}
             <div>
                 {currentUser
-                    ? <h2>
+                    ? <h4>
                         {currentUser.users.firstName || currentUser.users.username}'s Runs!
-                    </h2>
+                    </h4>
                     : (
                         <p>
                             <Link className="btn btn-primary font-weight-bold mr-3"

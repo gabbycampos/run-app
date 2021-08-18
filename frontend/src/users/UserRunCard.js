@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-
+import { Button, Table } from 'reactstrap';
+import './UserRunCard.css';
 // Show info about a run
 // Limited rendered to UserRunList to show a card for each run
 
-const UserRunCard = ({ id, userId, day, distance, pace, duration, place, deleteRunForUser}) => {
+const UserRunCard = ({ id, userId, day, distance, pace, duration, deleteRunForUser }) => {
     const handleDelete = (evt, id) => {
         evt.preventDefault();
         // debugger;
@@ -12,15 +13,28 @@ const UserRunCard = ({ id, userId, day, distance, pace, duration, place, deleteR
     }
     return (
         <div>
-            <Link className="Run-Card-Link" to={`/runs/${id}`}>
-                <h4>Date: {day}</h4>
-            </Link>
-            <p>{userId}</p>
-            <p>Distance: {distance}</p>
-            <p>Pace: {pace}</p>
-            <p>Duration: {duration}</p>
-            <p>Location: {place}</p>
-            <button onClick={(evt)=>handleDelete(evt,id)}>X</button>
+
+            <Table style={{ width: '70%', borderRadius: '5px' }}>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>username</th>
+                        <th>Distance</th>
+                        <th>Pace</th>
+                        <th>Duration</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><Link className="Run-Card-Link" to={`/runs/${id}`}><p>Date: {day}</p></Link></td>
+                        <td>{userId}</td>
+                        <td>{distance}</td>
+                        <td>{pace}</td>
+                        <td>{duration}</td>
+                    </tr>
+                </tbody>
+            </Table>
+            <Button className="card-btn btn btn-danger" onClick={(evt) => handleDelete(evt, id)}>Delete Run</Button>
         </div>
     )
 }

@@ -91,12 +91,13 @@ function App() {
       return { success: false, errors };
     }
   }
-  async function saveRun(data) {
+
+  async function deleteRunForUser(id) {
+    debugger;
     try {
-      await RunAppApi.saveRun(data);
-      return { success: true};
-    } catch (err) {
-      return { success: false };
+      await RunAppApi.deleteRun(id);
+    } catch(err) {
+      return { success: false }
     }
   }
 
@@ -108,7 +109,7 @@ function App() {
             value={{ currentUser, setCurrentUser }}>
           <div className="App">
             <Navigation logout={logout} />
-            <Routes login={login} signup={signup} saveRun={saveRun}/>
+            <Routes login={login} signup={signup} deleteRunForUser={deleteRunForUser}/>
           </div>
         </UserContext.Provider>
       </BrowserRouter>

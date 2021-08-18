@@ -8,21 +8,13 @@ const { BCRYPT_WORK_FACTOR } = require("../config.js");
 // Related functions for runs
 
 class Run {
-    static async create({id, userId, day, distance, pace, duration, coordinates, place, mapUrl }) {
-        const duplicateCheck = await db.query(
-            `SELECT id
-            FROM runs
-            WHERE id = $1`,
-            [id]);
-
-        if (duplicateCheck.rows[0]) throw new BadRequestError(`Duplicate run: ${id}`);
-
+    static async create({ userId, day, distance, pace, duration, coordinates }) {
         const result = await db.query(
             `INSERT INTO runs
-        (id, user_id, day, distance, pace, duration, coordinates, place, map_url)
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-        RETURNING id, user_id AS "userId", day, distance, pace, duration, coordinates, place, map_url AS "mapUrl"`,
-            [id, userId, day, distance, pace, duration, coordinates, place, mapUrl]);
+        (user_id, day, distance, pace, duration, coordinates)
+        VALUES ($1, $2, $3, $4, $5, $6)
+        RETURNING id, user_id AS "userId", day, distance, pace, duration, coordinates`,
+            [userId, day, distance, pace, duration, coordinates]);
 
         const run = result.rows[0];
 
@@ -39,8 +31,6 @@ class Run {
                 pace, 
                 duration,
                 coordinates
-                place,
-                map_url AS "mapUrl"
             FROM runs
             WHERE id = $1`, [id]
         );
@@ -61,9 +51,7 @@ class Run {
                 distance, 
                 pace,
                 duration,
-                coordinates,
-                place,
-                map_url AS "mapUrl"
+                coordinates
             FROM runs
             ORDER BY day`);
         return runs.rows;
