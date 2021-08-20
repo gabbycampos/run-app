@@ -8,7 +8,7 @@ import Timer from '../timers/Timer';
 import UserRunList from '../users/UserRunList';
 import UserRun from "../users/UserRun";
 
-function Routes({ login, signup, deleteRunForUser }) {
+function Routes({ login, signup }) {
   console.debug(
       "Routes",
       `login=${typeof login}`,
@@ -32,7 +32,7 @@ function Routes({ login, signup, deleteRunForUser }) {
           </Route>
 
           <PrivateRoute exact path="/timer">
-            <Timer deleteRunForUser={deleteRunForUser} />
+            <Timer />
           </PrivateRoute>
 
           <PrivateRoute exact path="/runs">

@@ -3,8 +3,10 @@ import TimerSetUp from './TimerSetUp';
 import './Timer.css';
 import haversine from 'haversine-distance';
 import RunAppApi from '../api/api';
+import UserContext from '../auth/UserContext';
 
 class Timer extends React.Component {
+    static contextType = UserContext;
     constructor() {
         super();
 
@@ -21,7 +23,7 @@ class Timer extends React.Component {
             pace: 0,
             duration: 0,
             currentGeolocation: '',
-            timeStart: '',
+            timeStart: ''
         }
         // loop timer until cycle ends
         this.loop = undefined;
@@ -83,7 +85,10 @@ class Timer extends React.Component {
                     this.setState({
                         ...this.state,
                         timerCount: timerCount - 1,
-                        coordinates: [...coordinates, currentGeolocation],
+                        coordinates: [...coordinates, {
+                            latitude: currentGeolocation.latitude,
+                            longitude: currentGeolocation.longitude
+                        }],
                     });
                     console.log(coordinates);
                 }
@@ -122,14 +127,17 @@ class Timer extends React.Component {
             pace: speed,
             coordinates: [...coordinates]
         });
-       debugger;
-        console.log(this.state.distance, this.state.duration, this.state.pace)
 
+    //    debugger;
+
+        console.log(this.state.distance, this.state.duration, this.state.pace)
+        console.log(this.context.currentUser.users.username)
         clearInterval(this.loop);
         
         // SEND TO DB
         return await RunAppApi.saveRun({
             day: new Date(),
+            userId: this.context.currentUser.users.username,
             distance: this.state.distance,
             pace: this.state.pace,
             duration: this.state.duration,

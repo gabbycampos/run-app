@@ -8,7 +8,7 @@ CREATE TABLE users (
 CREATE TABLE runs (
     id SERIAL PRIMARY KEY,
     user_id TEXT REFERENCES users,
-    day TIMESTAMP NOT NULL,
+    day DATE NOT NULL,
     distance TEXT NOT NULL,
     pace TEXT NOT NULL,
     duration TEXT NOT NULL,

@@ -66,7 +66,7 @@ class RunAppApi {
 
   // delete run
   static async deleteRun(id) {
-    let res = await this.request(`runs/${id}`, "delete");
+    let res = await this.request(`runs/${id}`, {}, "delete");
     return res;
   }
 

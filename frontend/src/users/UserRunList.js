@@ -4,7 +4,7 @@ import UserRunCard from './UserRunCard';
 import LoadingSpinner from '../common/LoadingSpinner';
 // import { useParams } from "react-router-dom";
 import UserContext from '../auth/UserContext';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 // routes: 
 // Shows list of runs from a user.
@@ -15,6 +15,7 @@ function UserRunList() {
     // console.debug("UserRunList", "userId=", userId);
     const { currentUser } = useContext(UserContext);
     console.debug("UserRunList", "currentUser=", currentUser);
+    const history = useHistory();
 
     // useEffect(() => {
     //     async function getRunList(userId) {
@@ -36,28 +37,21 @@ function UserRunList() {
     }
 
     console.log('currentUser.users log ', currentUser.users.username)
- 
-    async function deleteRunForUser(id) {
-        await RunAppApi.deleteRun(id);
-    }
-    
-    // const runComponent = runs.runs.map(r => (
-    //     <UserRunCard
-    //     key={r.id}
-    //     id={r.id}
-    //     userId={r.userId}
-    //     date={new Date(r.day)}
-    //     distance={r.distance}
-    //     pace={r.pace}
-    //     duration={r.duration}
-    //     place={r.place}
-    //     remove={remove}
-    //     />
-    //     ));
 
-        if (!runs) return <LoadingSpinner />;
+    async function deleteRunForUser(id) {
+        let response = await RunAppApi.deleteRun(id);
+        if (response) {
+            return history.push('/timer')
+            // window.location.reload()
+        }
         // debugger;
-        
+        // setRuns(runs.filter(run => {
+        //     return run.id !== id;
+        // }))
+    }
+
+    if (!runs) return <LoadingSpinner />;
+
     return (
         <div className="RunList col-md-8 offset-md-2">
             {/* {console.log(`comp `, runComponent)} */}
@@ -87,7 +81,7 @@ function UserRunList() {
                                 key={r.id}
                                 id={r.id}
                                 userId={r.userId}
-                                date={new Date(r.day)}
+                                day={r.day}
                                 distance={r.distance}
                                 pace={r.pace}
                                 duration={r.duration}

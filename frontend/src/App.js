@@ -92,15 +92,6 @@ function App() {
     }
   }
 
-  async function deleteRunForUser(id) {
-    debugger;
-    try {
-      await RunAppApi.deleteRun(id);
-    } catch(err) {
-      return { success: false }
-    }
-  }
-
   if (!infoLoaded) return <LoadingSpinner />;
 
   return (
@@ -109,7 +100,7 @@ function App() {
             value={{ currentUser, setCurrentUser }}>
           <div className="App">
             <Navigation logout={logout} />
-            <Routes login={login} signup={signup} deleteRunForUser={deleteRunForUser}/>
+            <Routes login={login} signup={signup} />
           </div>
         </UserContext.Provider>
       </BrowserRouter>

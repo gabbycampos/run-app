@@ -34,8 +34,6 @@ const UserRun = () => {
             <p>Distance: {runs.runs.distance}</p>
             <p>Pace: {runs.runs.pace}</p>
             <p>Duration: {runs.runs.duration}</p>
-            <p>Location: {runs.runs.place}</p>
-            <p>Map: {runs.runs.mapUrl}</p>
         </div>
     )
 }
