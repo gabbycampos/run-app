@@ -1,0 +1,26 @@
+.run-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    position: relative;
+    max-width: 100%;
+} 
+
+.run-card .text {
+    padding: 0 20px 20px;
+}
+.title {
+    color: orange;
+}
+.text {
+    margin: 20px;
+}
+.run-image {
+    position: absolute;
+    bottom: 0;
+}
+span {
+    display: inline-block;
+    margin-right: 2rem;
+}

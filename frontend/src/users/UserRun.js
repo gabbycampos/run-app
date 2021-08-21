@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import RunAppApi from '../api/api';
 import LoadingSpinner from '../common/LoadingSpinner';
-
+import './UserRun.css';
 // Show run detail
 
 const UserRun = () => {
@@ -29,12 +29,17 @@ const UserRun = () => {
     if (!runs) return <LoadingSpinner />;
 
     return (
-        <div className="RunDetail col-md-8 offset-md-2">
-            <h4>My Run</h4>
-            <p>Distance: {runs.runs.distance}</p>
-            <p>Pace: {runs.runs.pace}</p>
-            <p>Duration: {runs.runs.duration}</p>
-        </div>
+            <article className="run-card">
+                <div className="text">
+                    <h4 className="title">Run Summary - {(new Date(runs.runs.day).toDateString())}</h4>
+                    <span>Distance: {runs.runs.distance} miles</span>
+                    <span>Avg Pace: {runs.runs.pace} <small>(min / mil)</small></span>
+                    <span>Duration: {runs.runs.duration} <small>min</small></span>
+                </div>
+                <div className="run-image">
+                    <p>image here</p>
+                </div>
+            </article>
     )
 }
 

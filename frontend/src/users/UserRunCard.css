@@ -5,3 +5,10 @@
 table {
     border: 5px solid rgb(173, 173, 173);
 }
+a {
+    color: orange;
+}
+a:hover {
+    text-decoration: none;
+    color: white;
+}

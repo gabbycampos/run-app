@@ -111,39 +111,41 @@ class Timer extends React.Component {
         let seconds = ((diff % 60000) / 1000).toFixed(0);
         let time = (minutes * 60) + seconds
         let speed = `${time / this.state.distance}`
+        let min = Math.floor(speed / 60000);
+        let sec = ((speed % 60000) / 1000).toFixed(0);
         //return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
 
-        // UPDATE state
-        this.setState({
-            ...this.state,
-            walkTimer: 1,
-            runTimer: 2,
-            cycleNumber: 3,
-            timerCount: 2 * 60,
-            cycleType: 'RUN',
-            runActive: false,
-            distance: haversine(first, last) * 0.000621371192.toFixed(2),
-            duration: (minutes) + ":" + (seconds < 10 ? '0' : '') + seconds,
-            pace: speed,
-            coordinates: [...coordinates]
-        });
-
-    //    debugger;
-
-        console.log(this.state.distance, this.state.duration, this.state.pace)
-        console.log(this.context.currentUser.users.username)
-        clearInterval(this.loop);
         
-        // SEND TO DB
-        return await RunAppApi.saveRun({
-            day: new Date(),
-            userId: this.context.currentUser.users.username,
-            distance: this.state.distance,
-            pace: this.state.pace,
-            duration: this.state.duration,
-            coordinates: this.state.coordinates
-        });
-        
+        //    debugger;
+        if (this.state.isActive === true || this.state.cycleNumber === 0) {
+            
+            // UPDATE state
+            this.setState({
+                ...this.state,
+                walkTimer: 1,
+                runTimer: 2,
+                cycleNumber: 3,
+                timerCount: 2 * 60,
+                cycleType: 'RUN',
+                runActive: false,
+                distance: haversine(first, last) * 0.000621371192.toFixed(2),
+                duration: (minutes) + ":" + (seconds < 10 ? '0' : '') + seconds,
+                pace: (min) + ":" + (sec < 10 ? '0' : '') + sec,
+                coordinates: [...coordinates]
+            });
+
+            clearInterval(this.loop);
+            
+            // SEND TO DB
+            return await RunAppApi.saveRun({
+                day: new Date(),
+                userId: this.context.currentUser.users.username,
+                distance: this.state.distance,
+                pace: this.state.pace,
+                duration: this.state.duration,
+                coordinates: this.state.coordinates
+            });
+        }  
     }
 
     // handle time conversion
@@ -266,10 +268,10 @@ class Timer extends React.Component {
                     <h2 className="card-title">{this.state.cycleType}</h2>
                     <p className="time">{this.convertToTime(this.state.timerCount)}</p>
                     <button className="btn btn-warning" onClick={this.handleStart}>{`${this.state.isActive ? 'Pause' : 'Start'}`}</button>
-                    <button className="btn btn-warning" onClick={this.handleStop}>Stop</button>
-                    <h1>{this.state.distance}</h1>
+                    <button className="btn btn-warning" onClick={this.handleStop}>{`${this.state.cycleNumber === 0 ? 'Save' : 'Stop'}`}</button>
+                    {/* <h1>{this.state.distance}</h1>
                     <h1>{this.state.duration}</h1>
-                    <h1>{this.state.pace}</h1>
+                    <h1>{this.state.pace}</h1> */}
                 </div>
                 <div className="timers">
                     <TimerSetUp {...cycleProps} />

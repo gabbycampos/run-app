@@ -16,9 +16,9 @@ function HomePage() {
                 <h1 className="mb-4 font-weight-bold">Run App</h1>
                 <p className="lead">Run along with your custom running timer.</p>
                 {currentUser
-                    ? <h2>
-                        Welcome Back, {currentUser.users.firstName || currentUser.users.username}!
-                    </h2>
+                    ? <h3>
+                        Welcome Back, {currentUser.users.firstName || currentUser.users.username}! 🏃‍♀️ 🏃‍♂️
+                    </h3>
                     : (
                         <p>
                             <Link className="btn btn-primary font-weight-bold mr-3"
