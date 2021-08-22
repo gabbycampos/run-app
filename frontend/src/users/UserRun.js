@@ -12,7 +12,6 @@ const UserRun = () => {
 
     useEffect(function getRunForUser() {
         async function getRun() {
-            // debugger;
             setRuns(await RunAppApi.getRun(id));
         }
         getRun();

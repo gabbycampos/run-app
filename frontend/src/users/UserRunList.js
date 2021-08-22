@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import RunAppApi from '../api/api';
 import UserRunCard from './UserRunCard';
 import LoadingSpinner from '../common/LoadingSpinner';
-// import { useParams } from "react-router-dom";
 import UserContext from '../auth/UserContext';
 import { Link, useHistory } from 'react-router-dom';
 
@@ -11,20 +10,9 @@ import { Link, useHistory } from 'react-router-dom';
 
 function UserRunList() {
     const [runs, setRuns] = useState(null);
-    // const { userId } = useParams();
-    // console.debug("UserRunList", "userId=", userId);
     const { currentUser } = useContext(UserContext);
     console.debug("UserRunList", "currentUser=", currentUser);
     const history = useHistory();
-
-    // useEffect(() => {
-    //     async function getRunList(userId) {
-    //         // debugger;
-    //         let runs = await RunAppApi.getRuns(userId);
-    //         setRuns(runs);
-    //     }
-    //     getRunList()
-    // }, [userId]);
 
     useEffect(function getRunsOnMount() {
         getRunList();
@@ -73,7 +61,7 @@ function UserRunList() {
                         </p>
                     )}
             </div>
-            <div>
+            <div>                
                 {runs.runs.length ? (
                     <div>
                         {runs.runs.map(r => (
