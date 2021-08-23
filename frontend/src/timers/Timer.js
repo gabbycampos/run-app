@@ -86,8 +86,8 @@ class Timer extends React.Component {
                         ...this.state,
                         timerCount: timerCount - 1,
                         coordinates: [...coordinates, {
-                            latitude: currentGeolocation.latitude,
-                            longitude: currentGeolocation.longitude
+                            longitude: currentGeolocation.longitude,
+                            latitude: currentGeolocation.latitude
                         }],
                     });
                     console.log(coordinates);
@@ -101,8 +101,8 @@ class Timer extends React.Component {
         event.preventDefault();
         // DISTANCE
         const { coordinates, timeStart } = this.state;
-        let first = { lat: coordinates[0].latitude, lng: coordinates[0].longitude, time: new Date().getTime() }
-        let last = { lat: coordinates[coordinates.length - 1].latitude, lng: coordinates[coordinates.length - 1].longitude }
+        let first = { lng: coordinates[0].longitude, lat: coordinates[0].latitude }
+        let last = { lng: coordinates[coordinates.length - 1].longitude, lat: coordinates[coordinates.length - 1].latitude }
 
         // DURATION and PACE
         let timeEnd = new Date()
@@ -110,13 +110,17 @@ class Timer extends React.Component {
         let minutes = Math.floor(diff / 60000);
         let seconds = ((diff % 60000) / 1000).toFixed(0);
         let time = (minutes * 60) + seconds
-        let speed = `${time / this.state.distance}`
+        //let speed = `${time / this.state.distance}`
+        let speed = (time / (haversine(first, last) * 0.62137).toFixed(2))
         let min = Math.floor(speed / 60000);
         let sec = ((speed % 60000) / 1000).toFixed(0);
         //return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+        console.log(time, speed, min, sec)
+        // console.log(first, last);
+        // let start = {longitude: -116.91873169795818, latitude: 33.76077513577232}
+        // let end = {longitude: -116.91877562512579, latitude: 33.76079611705926}
+        // console.log((haversine(start, end) * 0.62137).toFixed(2))
 
-        
-        //    debugger;
         if (this.state.isActive === true || this.state.cycleNumber === 0) {
             
             // UPDATE state
@@ -128,7 +132,7 @@ class Timer extends React.Component {
                 timerCount: 2 * 60,
                 cycleType: 'RUN',
                 runActive: false,
-                distance: haversine(first, last) * 0.000621371192.toFixed(2),
+                distance: (haversine(first, last) * 0.62137).toFixed(2),
                 duration: (minutes) + ":" + (seconds < 10 ? '0' : '') + seconds,
                 pace: (min) + ":" + (sec < 10 ? '0' : '') + sec,
                 coordinates: [...coordinates]
