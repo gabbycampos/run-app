@@ -21,11 +21,11 @@ function HomePage() {
                     </h3>
                     : (
                         <p>
-                            <Link className="btn btn-primary font-weight-bold mr-3"
+                            <Link className="btn btn-warning font-weight-bold mr-3"
                                 to="/login">
                                 Log in
                             </Link>
-                            <Link className="btn btn-primary font-weight-bold"
+                            <Link className="btn btn-warning font-weight-bold"
                                 to="/signup">
                                 Sign up
                             </Link>

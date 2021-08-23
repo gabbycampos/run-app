@@ -39,8 +39,8 @@ function App() {
           let currentUser = await RunAppApi.getCurrentUser(username);
           setCurrentUser(currentUser);
           //console.log(currentUser);
-        } catch (err) {
-          console.error("App loadUserInfo: problem loading", err);
+        } catch (errors) {
+          console.error("App loadUserInfo: problem loading", errors);
           setCurrentUser(null);
         }
       }

@@ -3,7 +3,9 @@ import { useParams } from 'react-router';
 import RunAppApi from '../api/api';
 import LoadingSpinner from '../common/LoadingSpinner';
 import './UserRun.css';
-// Show run detail
+import MapBox from './MapBox';
+
+// Show run detail with map image
 
 const UserRun = () => {
     const { id } = useParams();
@@ -28,17 +30,17 @@ const UserRun = () => {
     if (!runs) return <LoadingSpinner />;
 
     return (
-            <article className="run-card">
-                <div className="text">
-                    <h4 className="title">Run Summary - {(new Date(runs.runs.day).toDateString())}</h4>
-                    <span>Distance: {runs.runs.distance} miles</span>
-                    <span>Avg Pace: {runs.runs.pace} <small>(min / mil)</small></span>
-                    <span>Duration: {runs.runs.duration} <small>min</small></span>
-                </div>
-                <div className="run-image">
-                    <p>image here</p>
-                </div>
-            </article>
+        <article className="run-card">
+            <div className="text">
+                <h4 className="title">Run Summary - {(new Date(runs.runs.day).toDateString())}</h4>
+                <span>Distance: {runs.runs.distance} miles</span>
+                <span>Avg Pace: {runs.runs.pace} <small>(min / mil)</small></span>
+                <span>Duration: {runs.runs.duration} <small>min</small></span>
+            </div>
+            <div className="run-image">
+                <MapBox />
+            </div>
+        </article>
     )
 }
 
