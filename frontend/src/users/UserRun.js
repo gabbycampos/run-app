@@ -38,7 +38,7 @@ const UserRun = () => {
                 <span>Duration: {runs.runs.duration} <small>min</small></span>
             </div>
             <div className="run-image">
-                <MapBox />
+                {/* <MapBox /> */}
             </div>
         </article>
     )

@@ -19,7 +19,7 @@ class Timer extends React.Component {
             runActive: false,
             coordinates: [],
 
-            distance: 1,
+            distance: 0,
             pace: 0,
             duration: 0,
             currentGeolocation: '',
@@ -27,6 +27,8 @@ class Timer extends React.Component {
         }
         // loop timer until cycle ends
         this.loop = undefined;
+        this.audio = document.getElementById('beep');
+        console.log(this.audio)
     }
 
     componentWillUnmount() {
@@ -81,6 +83,7 @@ class Timer extends React.Component {
                         cycleType: (cycleType === 'RUN') ? 'WALK' : 'RUN',
                         timerCount: (cycleType === 'RUN') ? (walkTimer * 60) : (runTimer * 60),
                     });
+                    this.audio.play()
                 } else {
                     this.setState({
                         ...this.state,
