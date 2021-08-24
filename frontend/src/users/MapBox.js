@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import ReactMapGL from 'react-map-gl';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import PolylineOverlay from './PolylineOverlay';
-import { useParams } from 'react-router';
-import RunAppApi from '../api/api';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiZ2FiYXRyb24iLCJhIjoiY2tzNDNkN2I1MGp1bTJwc214ZnVwajRvciJ9.wVMGgukfb54v3u1X2e94Eg';
 
@@ -15,17 +13,6 @@ function MapBox() {
         zoom: 14
     });
 
-    const { id } = useParams();
-    console.debug("UserRun", "id=", id);
-    const [runs, setRuns] = useState(null);
-
-    useEffect(function getRunForUser() {
-        async function getRun() {
-            setRuns(await RunAppApi.getRun(id));
-        }
-        getRun();
-    }, [id]);
-
     return (
         <div className="map-container">
             <ReactMapGL
@@ -34,7 +21,7 @@ function MapBox() {
                 height="100%"
                 onViewportChange={(viewport) => setViewport(viewport)}
                 mapboxApiAccessToken={mapboxgl.accessToken}>
-                <PolylineOverlay points={runs.runs.coordinates} />
+                <PolylineOverlay points={runs.runs.coordinates.map(loc => loc.coordinates)} />
             </ReactMapGL>
         </div>
     );

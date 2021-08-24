@@ -28,7 +28,6 @@ class Timer extends React.Component {
         // loop timer until cycle ends
         this.loop = undefined;
         this.audio = document.getElementById('beep');
-        console.log(this.audio)
     }
 
     componentWillUnmount() {
@@ -102,27 +101,31 @@ class Timer extends React.Component {
     // stop / reset timer and post to db
     handleStop = async (event) => {
         event.preventDefault();
-        // DISTANCE
         const { coordinates, timeStart } = this.state;
         let first = { lng: coordinates[0].longitude, lat: coordinates[0].latitude }
         let last = { lng: coordinates[coordinates.length - 1].longitude, lat: coordinates[coordinates.length - 1].latitude }
 
-        // DURATION and PACE
+        // DURATION
         let timeEnd = new Date()
         let diff = (timeEnd.getTime() - timeStart.getTime());
         let minutes = Math.floor(diff / 60000);
         let seconds = ((diff % 60000) / 1000).toFixed(0);
         let time = (minutes * 60) + seconds
         //let speed = `${time / this.state.distance}`
-        let speed = (time / (haversine(first, last) * 0.62137).toFixed(2))
+        // let speed = (time / (haversine(first, last) * 0.62137).toFixed(2))
+        
+        // DISTANCE & PACE
+        let speed = (time / (haversine(first, last) * 0.000621371192)); // for pace
+        let s = ((haversine(first, last) * 0.000621371192) / time) // for distance
+        let d = (s * time).toFixed(2)
         let min = Math.floor(speed / 60000);
         let sec = ((speed % 60000) / 1000).toFixed(0);
         //return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
-        console.log(time, speed, min, sec)
+        console.log(time, speed, min, sec, d)
         // console.log(first, last);
-        // let start = {longitude: -116.91873169795818, latitude: 33.76077513577232}
-        // let end = {longitude: -116.91877562512579, latitude: 33.76079611705926}
-        // console.log((haversine(start, end) * 0.62137).toFixed(2))
+        // let start = {lng: -116.91876668493907, lat: 33.76077359545395}
+        // let end = {lng: -116.91477195370655, lat: 33.75448239039048}
+        //console.log((haversine(first, last) * 0.000621371192).toFixed(2))
 
         if (this.state.isActive === true || this.state.cycleNumber === 0) {
             
@@ -135,7 +138,7 @@ class Timer extends React.Component {
                 timerCount: 2 * 60,
                 cycleType: 'RUN',
                 runActive: false,
-                distance: (haversine(first, last) * 0.62137).toFixed(2),
+                distance: d,
                 duration: (minutes) + ":" + (seconds < 10 ? '0' : '') + seconds,
                 pace: (min) + ":" + (sec < 10 ? '0' : '') + sec,
                 coordinates: [...coordinates]
