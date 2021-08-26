@@ -112,7 +112,6 @@ class Timer extends React.Component {
         let minutes = Math.floor(diff / 60000);
         let seconds = ((diff % 60000) / 1000).toFixed(0);
         let time = (minutes * 60) + seconds
-        //let speed = `${time / this.state.distance}`
         // let speed = (time / (haversine(first, last) * 0.62137).toFixed(2))
         
         // start time: 1629994810557 9:20
@@ -120,12 +119,11 @@ class Timer extends React.Component {
     
         // DISTANCE & PACE
         let speed = (time / (haversine(first, last) * 0.000621371192)); // for pace
-        let s = ((haversine(first, last) * 0.000621371192) / time) // for distance
-        let d = (s * time).toFixed(2)
+        // let s = ((haversine(first, last) * 0.000621371192) / time) // for distance (alt)
+        // let d = (s * time).toFixed(2)
         let min = Math.floor(speed / 60000);
         let sec = ((speed % 60000) / 1000).toFixed(0);
         //return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
-        console.log(time, speed, min, sec, d)
         // console.log(first, last);
         // let start = {lng: -116.91876668493907, lat: 33.76077359545395}
         // let end = {lng: -116.91477195370655, lat: 33.75448239039048}
@@ -142,7 +140,7 @@ class Timer extends React.Component {
                 timerCount: 2 * 60,
                 cycleType: 'RUN',
                 runActive: false,
-                distance: d,
+                distance: (haversine(first, last) * 0.000621371192).toFixed(2),
                 duration: (minutes) + ":" + (seconds < 10 ? '0' : '') + seconds,
                 pace: (min) + ":" + (sec < 10 ? '0' : '') + sec,
                 coordinates: [...coordinates]
