@@ -1,5 +1,5 @@
-* {
-    background-color: rgb(24, 24, 24);;
+body {
+    background-color: rgb(100, 100, 100);
 }
 .card-body {
     text-align: center;

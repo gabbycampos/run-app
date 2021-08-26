@@ -107,6 +107,7 @@ class Timer extends React.Component {
 
         // DURATION
         let timeEnd = new Date()
+        console.log('time end: ', timeEnd.getTime())
         let diff = (timeEnd.getTime() - timeStart.getTime());
         let minutes = Math.floor(diff / 60000);
         let seconds = ((diff % 60000) / 1000).toFixed(0);
@@ -114,6 +115,9 @@ class Timer extends React.Component {
         //let speed = `${time / this.state.distance}`
         // let speed = (time / (haversine(first, last) * 0.62137).toFixed(2))
         
+        // start time: 1629994810557 9:20
+        // end time: 1629994922192 9:22
+    
         // DISTANCE & PACE
         let speed = (time / (haversine(first, last) * 0.000621371192)); // for pace
         let s = ((haversine(first, last) * 0.000621371192) / time) // for distance
@@ -130,7 +134,7 @@ class Timer extends React.Component {
         if (this.state.isActive === true || this.state.cycleNumber === 0) {
             
             // UPDATE state
-            this.setState({
+            const newState = {
                 ...this.state,
                 walkTimer: 1,
                 runTimer: 2,
@@ -142,7 +146,9 @@ class Timer extends React.Component {
                 duration: (minutes) + ":" + (seconds < 10 ? '0' : '') + seconds,
                 pace: (min) + ":" + (sec < 10 ? '0' : '') + sec,
                 coordinates: [...coordinates]
-            });
+            };
+            
+            this.setState(newState)
 
             clearInterval(this.loop);
             
@@ -150,10 +156,10 @@ class Timer extends React.Component {
             return await RunAppApi.saveRun({
                 day: new Date(),
                 userId: this.context.currentUser.users.username,
-                distance: this.state.distance,
-                pace: this.state.pace,
-                duration: this.state.duration,
-                coordinates: this.state.coordinates
+                distance: newState.distance,
+                pace: newState.pace,
+                duration: newState.duration,
+                coordinates: newState.coordinates
             });
         }  
     }

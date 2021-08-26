@@ -60,7 +60,7 @@ describe("register", function () {
             password: "password",
         });
         expect(user).toEqual({
-            username: "testuser1",
+            username: "testuser",
             firstName: "Test",
             lastName: "User"
         });
@@ -89,7 +89,7 @@ describe("register", function () {
 
 describe("get", function () {
     test("works", async function () {
-        let user = await User.get("testuser");
+        let user = await User.get("testuser1");
         expect(user).toEqual({
             username: "testuser1",
             firstName: "Test",

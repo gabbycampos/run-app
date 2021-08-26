@@ -20,7 +20,7 @@ const UserRun = () => {
     const [viewport, setViewport] = React.useState({
         longitude: -116.91893124612263,
         latitude: 33.76030225825322,
-        zoom: 14
+        zoom: 20
     });
 
     useEffect(function getRunForUser() {
@@ -29,38 +29,37 @@ const UserRun = () => {
         }
         getRun();
     }, [id]);
-    // useEffect(function getRunOnMount() {
-    //     getUserRun(id);
-    // }, [id]);
-
-    // async function getUserRun(id) {
-    //     let { run } = await RunAppApi.getRun(id);
-    //     setRun(run)
-    // }
 
     if (!runs) return <LoadingSpinner />;
 
     return (
-        <article className="run-card">
-            <div className="text">
-                <h4 className="title">Run Summary - {(new Date(runs.runs.day).toDateString())}</h4>
-                <span>Distance: {runs.runs.distance} miles</span>
-                <span>Avg Pace: {runs.runs.pace} <small>(mil / hr)</small></span>
-                <span>Duration: {runs.runs.duration} <small>min</small></span>
-            </div>
+        <div>
+
+            <article className="run-card">
+                <div className="text">
+                    <h4 className="title">Run Summary - {(new Date(runs.runs.day).toDateString())}</h4>
+                    <span>Distance: {runs.runs.distance} miles</span>
+                    <span>Avg Pace: {runs.runs.pace} <small>(mil / hr)</small></span>
+                    <span>Duration: {runs.runs.duration} <small>min</small></span>
+                </div>
+            </article>
             <div className="run-image">
-                {/* <div className="map-container">
+                <div className="map-container">
                     <ReactMapGL
                         {...viewport}
                         width="100%"
                         height="100%"
                         onViewportChange={(viewport) => setViewport(viewport)}
                         mapboxApiAccessToken={mapboxgl.accessToken}>
-                        <PolylineOverlay points={runs.runs.coordinates.map(loc => loc.coordinates)} />
+                        <PolylineOverlay points={runs.runs.coordinates.map(loc => {
+                            loc = JSON.parse(loc)
+                            return [loc.longitude, loc.latitude]
+                        }
+                        )} />
                     </ReactMapGL>
-                </div> */}
+                </div>
             </div>
-        </article>
+        </div>
     )
 }
 
