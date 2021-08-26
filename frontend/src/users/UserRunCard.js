@@ -33,7 +33,7 @@ const UserRunCard = ({ id, userId, day, distance, pace, duration, deleteRunForUs
                             <td><Link className="Run-Card-Link" to={`/runs/${id}`}><p>{(new Date(day).toLocaleDateString("en-US"))}</p></Link></td>
                             <td>{userId}</td>
                             <td>{distance} miles</td>
-                            <td>{pace} <small>(mil/hr)</small></td>
+                            <td>{pace} <small>(min/mil)</small></td>
                             <td>{duration} <small>min</small></td>
                             <td><Button className="card-btn btn btn-warning" onClick={(evt) => handleDelete(evt, id)}>Delete Run</Button></td>
                         </tr>
