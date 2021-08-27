@@ -3,14 +3,14 @@ import { useParams } from 'react-router';
 import RunAppApi from '../api/api';
 import LoadingSpinner from '../common/LoadingSpinner';
 import './UserRun.css';
-
 import ReactMapGL from 'react-map-gl';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import PolylineOverlay from './PolylineOverlay';
-mapboxgl.accessToken = 'pk.eyJ1IjoiZ2FiYXRyb24iLCJhIjoiY2tzNDNkN2I1MGp1bTJwc214ZnVwajRvciJ9.wVMGgukfb54v3u1X2e94Eg';
 
 // Show run detail with map image
+
+mapboxgl.accessToken = 'pk.eyJ1IjoiZ2FiYXRyb24iLCJhIjoiY2tzNDNkN2I1MGp1bTJwc214ZnVwajRvciJ9.wVMGgukfb54v3u1X2e94Eg';
 
 const UserRun = () => {
     const { id } = useParams();
