@@ -2,8 +2,9 @@
     margin: 0;
 }
 
-table {
+.table {
     border: 5px solid rgb(173, 173, 173);
+    width: 80%;
 }
 a {
     color: orange;
@@ -12,8 +13,12 @@ a:hover {
     text-decoration: none;
     color: white;
 }
+.RunList {
+    height: 100%;
+    width: 100%;
+}
 @media screen and (max-width: 600px) {
-    body {
-        height: 800px;
+    .table {
+        width:50%;
     }
 }

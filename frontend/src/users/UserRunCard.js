@@ -18,7 +18,7 @@ const UserRunCard = ({ id, userId, day, distance, pace, duration, deleteRunForUs
     return (
         <div>
             {currentUser.users.username === userId ?
-                <Table style={{ width: '80%', borderRadius: '5px' }}>
+                <Table style={{ borderRadius: '5px' }}>
                     <thead>
                         <tr>
                             <th>Date</th>
