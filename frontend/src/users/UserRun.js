@@ -20,7 +20,7 @@ const UserRun = () => {
     const [viewport, setViewport] = React.useState({
         longitude: -116.91893124612263,
         latitude: 33.76030225825322,
-        zoom: 20
+        zoom: 10
     });
 
     useEffect(function getRunForUser() {
