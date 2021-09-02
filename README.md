@@ -43,6 +43,7 @@ npm install
 createdb run-app
 ```
 5. Start servers in both directories!
+
 Backend:
 ```bash
 nodemon server.js
