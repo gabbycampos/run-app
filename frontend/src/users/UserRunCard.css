@@ -12,3 +12,8 @@ a:hover {
     text-decoration: none;
     color: white;
 }
+@media screen and (max-width: 600px) {
+    body {
+        height: 800px;
+    }
+}

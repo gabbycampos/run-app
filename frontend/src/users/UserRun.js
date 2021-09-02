@@ -10,7 +10,7 @@ import PolylineOverlay from './PolylineOverlay';
 
 // Show run detail with map image
 
-mapboxgl.accessToken = 'pk.eyJ1IjoiZ2FiYXRyb24iLCJhIjoiY2tzNDNkN2I1MGp1bTJwc214ZnVwajRvciJ9.wVMGgukfb54v3u1X2e94Eg';
+mapboxgl.accessToken = 'pk.eyJ1IjoiZ2FiYXRyb24iLCJhIjoiY2t0Mzcyd2YzMDR3YjJ2bnViZ3QxeWFociJ9.kpIGKfhs34paqkF0xNGRZQ';
 
 const UserRun = () => {
     const { id } = useParams();
