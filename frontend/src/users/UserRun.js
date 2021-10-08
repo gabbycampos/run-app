@@ -10,6 +10,8 @@ import PolylineOverlay from './PolylineOverlay';
 
 // Show run detail with map image
 
+// eslint-disable-next-line import/no-webpack-loader-syntax
+mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
 mapboxgl.accessToken = 'pk.eyJ1IjoiZ2FiYXRyb24iLCJhIjoiY2t0Mzcyd2YzMDR3YjJ2bnViZ3QxeWFociJ9.kpIGKfhs34paqkF0xNGRZQ';
 
 const UserRun = () => {
@@ -22,10 +24,18 @@ const UserRun = () => {
         latitude: 33.76030225825322,
         zoom: 10
     });
-
+    //debugger;
     useEffect(function getRunForUser() {
         async function getRun() {
-            setRuns(await RunAppApi.getRun(id));
+            let data = await RunAppApi.getRun(id);
+            data.runs.coordinates = data.runs.coordinates.map(ele => {return JSON.parse(ele)})
+            //console.log('data', data.runs.coordinates[0].longitude)
+            setRuns(data);
+            setViewport({
+                longitude: data.runs.coordinates[0].longitude,
+                latitude: data.runs.coordinates[0].latitude,
+                zoom: viewport.zoom
+            });
         }
         getRun();
     }, [id]);
@@ -52,7 +62,7 @@ const UserRun = () => {
                         onViewportChange={(viewport) => setViewport(viewport)}
                         mapboxApiAccessToken={mapboxgl.accessToken}>
                         <PolylineOverlay points={runs.runs.coordinates.map(loc => {
-                            loc = JSON.parse(loc)
+                            //loc = JSON.parse(loc)
                             return [loc.longitude, loc.latitude]
                         }
                         )} />

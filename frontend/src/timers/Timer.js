@@ -22,7 +22,7 @@ class Timer extends React.Component {
             distance: 0,
             pace: 0,
             duration: 0,
-            currentGeolocation: '',
+            currentGeolocation: {longitude: 0, latitude: 0},
             timeStart: ''
         }
         // loop timer until cycle ends
@@ -107,7 +107,6 @@ class Timer extends React.Component {
 
         // DURATION
         let timeEnd = new Date()
-        console.log('time end: ', timeEnd.getTime())
         let diff = (timeEnd.getTime() - timeStart.getTime());
         let minutes = Math.floor(diff / 60000);
         let seconds = ((diff % 60000) / 1000).toFixed(0);
@@ -118,9 +117,15 @@ class Timer extends React.Component {
         // end time: 1629994922192 9:22
     
         // DISTANCE & PACE
-        let speed = (time / (haversine(first, last) * 0.000621371192)); // for pace
+        let speed = '';
+        let d = haversine(first, last) * 0.000621371192;
+        if (d === 0) {
+            speed = 0;
+        } else {
+            speed = (time / (haversine(first, last) * 0.000621371192)); // for pace
+        }
+        //console.log('speed', time, haversine(first, last) * 0.000621371192);
         // let s = ((haversine(first, last) * 0.000621371192) / time) // for distance (alt)
-        // let d = (s * time).toFixed(2)
         let min = Math.floor(speed / 60000);
         let sec = ((speed % 60000) / 1000).toFixed(0);
         //return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;

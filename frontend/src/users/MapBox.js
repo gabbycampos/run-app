@@ -6,10 +6,10 @@ import PolylineOverlay from './PolylineOverlay';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiZ2FiYXRyb24iLCJhIjoiY2tzNDNkN2I1MGp1bTJwc214ZnVwajRvciJ9.wVMGgukfb54v3u1X2e94Eg';
 
-function MapBox() {
+function MapBox({latitude, longitude}) {
     const [viewport, setViewport] = React.useState({
-        longitude: -116.91893124612263,
-        latitude: 33.76030225825322,
+        longitude: longitude,
+        latitude: latitude,
         zoom: 14
     });
 
